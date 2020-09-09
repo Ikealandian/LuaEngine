@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     gL = luaL_newstate();
 
     // Lua run program
-    const char* Program = "a sd= sd100 + 2";
+    const char* Program = "a = 100 + 2";
     LDOSTR(Program);
 
     // Get A result
