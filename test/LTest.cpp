@@ -58,7 +58,8 @@ int main(int argc, char** argv)
 
 void LPrintError(const char* _Error)
 {
-    printf("Lua [ERROR]: %s", _Error);
+    fflush(stderr);
+    fprintf(stderr, "Lua [ERROR]: %s\n", _Error);
 }
 
 bool LuaCheckResult(int _Result)
