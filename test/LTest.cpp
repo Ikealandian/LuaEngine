@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <lua.hpp>
 
+#include "LAllocTest.hpp"
+
 lua_State* gL = nullptr;
 
 void LPrintError(const char* _Error);
@@ -41,6 +43,10 @@ int main(int argc, char** argv)
     // Create Lua state
     gL = luaL_newstate();
 
+    // Use custom allocator
+    LAlloc Alloc;
+    lua_setallocf(gL, LAllocator, &Alloc);
+
     // Lua run program
     const char* Program = "a = 100 + 2";
     LDOSTR(Program);
@@ -49,8 +55,14 @@ int main(int argc, char** argv)
     double A = LGETNUM("a");
     printf("%s\na = %f\n", Program, A);
 
+    // Print allocated
+    printf("Allocated: %d\n", Alloc.Allocated);
+
     // Close Lua state
     lua_close(gL);
+
+    // Print allocated
+    printf("Closed\nAllocated: %d\nFreed: %d\nTotal: %d\n", Alloc.Allocated, Alloc.Freed, Alloc.Total);
 
     return 0;
 }
