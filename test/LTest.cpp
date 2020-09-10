@@ -15,10 +15,10 @@ double LuaGetNumber(const char* _Global);
 const char* LuaGetString(const char* _Global);
 
 #define LERROR              LPrintError
-#define LASSERT_ERROR(M)    LERROR(M); assert(false)
+#define LASSERT_ERROR(M)    LERROR(M); // assert
 
 #define LCALL_RELEASE(R)    LuaCheckResult(R)
-#define LCALL_DEBUG(R)      assert(LuaCheckResult(R))
+#define LCALL_DEBUG(R)      LuaCheckResult(R) // assert
 #define LCALL               LCALL_DEBUG
 
 #define LDOSTR(S)           LCALL(luaL_dostring(gL, S))
