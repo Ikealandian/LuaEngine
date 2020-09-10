@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <lua.hpp>
 
 lua_State* gL = nullptr;
