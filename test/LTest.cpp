@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 
     {
         // Profile the scope
-        Profile.ProfileThisScope("LuaTest");
+        auto P = Profile.ProfileThisScope("LuaTest");
 
         // Lua run program
         LDOFILE(argv[1]);
