@@ -15,9 +15,6 @@ struct Profile
 {
     const char* Name;
     double Ms;
-
-    // TODO:
-    int Allocations;
     int Allocated;
 };
 
@@ -27,9 +24,10 @@ class Profiler
 {
 private:
     std::map<const char*, Profile> Profiles;
+    struct LAlloc* lAlloc;
 
 public:
-    Profiler();
+    Profiler(struct LAlloc* _Alloc);
     ~Profiler();
 
     void StartProfiling(const char* _ProfileName);
@@ -50,13 +48,16 @@ class ScopeProfiler
 {
 private:
     Profiler* pProfiler;
-    
+    struct LAlloc* pAlloc;
+
+    int aBefore;
+
     Profile sProfile;
     std::chrono::steady_clock::time_point pStart, pEnd;
 
 public:
 
-    ScopeProfiler(const char* _ProfileName, Profiler* _Parent);
+    ScopeProfiler(const char* _ProfileName, Profiler* _Parent, struct LAlloc* _PAlloc);
     ~ScopeProfiler();
 
 };
