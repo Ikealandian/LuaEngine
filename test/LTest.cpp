@@ -43,6 +43,9 @@ int main(int argc, char** argv)
     // Create Lua state
     gL = luaL_newstate();
 
+    // Open Lua libraries
+	luaL_openlibs(gL);
+
     // Use custom allocator
     LAlloc Alloc;
     lua_setallocf(gL, LAllocator, &Alloc);
