@@ -7,6 +7,7 @@
 #include <lua.hpp>
 
 #include "LAllocTest.hpp"
+#include "LProfiling.hpp"
 
 lua_State* gL = nullptr;
 
@@ -23,6 +24,7 @@ const char* LuaGetString(const char* _Global);
 #define LCALL               LCALL_DEBUG
 
 #define LDOSTR(S)           LCALL(luaL_dostring(gL, S))
+#define LDOFILE(S)          LCALL(luaL_dofile(gL, S))
 
 #define LISNUM(I)           lua_isnumber(gL, I)
 #define LISNUMTOP()         LISNUM(-1)
@@ -50,13 +52,19 @@ int main(int argc, char** argv)
     LAlloc Alloc;
     lua_setallocf(gL, LAllocator, &Alloc);
 
-    // Lua run program
-    const char* Program = "a = 100 + 2";
-    LDOSTR(Program);
+    // Create a profiler
+    Profiler Profile;
 
-    // Get A result
-    double A = LGETNUM("a");
-    printf("%s\na = %f\n", Program, A);
+    {
+        // Profile the scope
+        Profile.ProfileThisScope("LuaTest");
+
+        // Lua run program
+        LDOFILE(argv[1]);
+    }
+
+    // Print scope profile data
+    Profile.PrintProfileData("LuaTest");
 
     // Print allocated
     printf("Allocated: %d\n", Alloc.Allocated);
@@ -65,7 +73,7 @@ int main(int argc, char** argv)
     lua_close(gL);
 
     // Print allocated
-    printf("Closed\nAllocated: %d\nFreed: %d\nTotal: %d\n", Alloc.Allocated, Alloc.Freed, Alloc.Total);
+    printf("Closed\nAllocated: %d\nTotal: %d\n", Alloc.Allocated, Alloc.Total);
 
     return 0;
 }
