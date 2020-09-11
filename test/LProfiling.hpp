@@ -44,7 +44,7 @@ public:
 };
 
 // Start and Stop Times
-// Memory usage change
+// TODO: Memory usage change
 // Created by Scope
 class ScopeProfiler
 {
