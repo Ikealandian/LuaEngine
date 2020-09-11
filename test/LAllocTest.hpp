@@ -2,6 +2,9 @@
 // Lua Allocation
 //
 
+#ifndef _LALLOCTEST_
+#define _LALLOCTEST_
+
 #include <stdlib.h>
 #include <memory>
 #include <map>
@@ -9,19 +12,19 @@
 
 typedef struct LAlloc
 {
-    int Total;
-    int Allocated;
-    int Freed;
+    int Total = 0;
+    int Allocated = 0;
     std::map<uintptr_t, size_t> Allocations;
 }LAlloc;
 
 static inline void* LAllocator_Alloc(size_t _Size, LAlloc* _Alloc)
 {
     void* Allocation = malloc(_Size);
+    uintptr_t Pointer = reinterpret_cast<uintptr_t>(Allocation);
+
     _Alloc->Allocated += _Size;
     _Alloc->Total += _Size;
 
-    uintptr_t Pointer = reinterpret_cast<uintptr_t>(Allocation);
     _Alloc->Allocations[Pointer] = _Size;
 
     return Allocation;
@@ -33,8 +36,6 @@ static inline void* LAllocator_Realloc(void* _Data, size_t _Size, LAlloc* _Alloc
     size_t Difference = _Size - _Alloc->Allocations[Pointer];
 
     _Alloc->Allocated += Difference;
-    _Alloc->Freed -= Difference;
-
     _Alloc->Total += (Difference > 0) ? Difference : 0;
 
     _Alloc->Allocations[Pointer] = _Size;
@@ -47,7 +48,6 @@ static inline void LAllocator_Free(void* _Data, LAlloc* _Alloc)
     uintptr_t Pointer = reinterpret_cast<uintptr_t>(_Data);
     size_t Size = _Alloc->Allocations[Pointer];
 
-    _Alloc->Freed += Size;
     _Alloc->Allocated -= Size;
 
     _Alloc->Allocations.erase(Pointer);
@@ -72,3 +72,5 @@ static inline void* LAllocator(void* UserData, void* Pointer, size_t oSize, size
 
     return LAllocator_Realloc(Pointer, nSize, lAlloc);
 }
+
+#endif
