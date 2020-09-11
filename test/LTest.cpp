@@ -16,12 +16,20 @@ bool LuaCheckResult(int _Result);
 double LuaGetNumber(const char* _Global);
 const char* LuaGetString(const char* _Global);
 
-#define LERROR              LPrintError
-#define LASSERT_ERROR(M)    LERROR(M); // assert
+#ifdef _WIN32
+#   include <crtdbg.h>
+#   define LBREAK           _CrtDbgBreak()
+#else
+#   include <csignal>
+#   define LBREAK           std::raise(SIGINT)
+#endif
 
-#define LCALL_RELEASE(R)    LuaCheckResult(R)
-#define LCALL_DEBUG(R)      LuaCheckResult(R) // assert
-#define LCALL               LCALL_DEBUG
+#define LASSERT(V, M)       if(!(V)) { LERROR(M); LBREAK; }
+
+#define LERROR              LPrintError
+#define LASSERT_ERROR(M)    LERROR(M); LBREAK;
+
+#define LCALL(R)            LuaCheckResult(R)
 
 #define LDOSTR(S)           LCALL(luaL_dostring(gL, S))
 #define LDOFILE(S)          LCALL(luaL_dofile(gL, S))
@@ -92,7 +100,7 @@ bool LuaCheckResult(int _Result)
     
     // Else LuaCall != OK
     // Print Error at top of stack
-    LERROR(LTOSTRTOP());
+    LASSERT_ERROR(LTOSTRTOP());
 
     return false;
 }
