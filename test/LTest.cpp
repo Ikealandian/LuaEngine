@@ -61,7 +61,7 @@ int main(int argc, char** argv)
     lua_setallocf(gL, LAllocator, &Alloc);
 
     // Create a profiler
-    Profiler Profile;
+    Profiler Profile = &Alloc;
 
     {
         // Profile the scope
