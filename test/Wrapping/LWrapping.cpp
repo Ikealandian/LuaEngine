@@ -22,29 +22,22 @@
  **/
 
 /**
- * lua_State Smart Pointer handler
+ * lua_State Smart Pointer deleter
 **/
-struct LuaStateHandler
+struct LuaStateDeleter
 {
-    lua_State* lState;
 
-    LuaStateHandler()
+    // Close the lua_State
+    void operator() (lua_State* _lua_state)
     {
-        // TODO:
-        // USE lua_newstate and create an Allocator
-        lState = luaL_newstate();
-    }
-
-    ~LuaStateHandler()
-    {
-        lua_close(lState);
+        lua_close(_lua_state);
     }
 };
 
 /**
  * lua_State Smart Pointer
  **/
-using LStatePtr = std::unique_ptr<lua_State, LuaStateHandler>;
+using LStatePtr = std::unique_ptr<lua_State, LuaStateDeleter>;
 
 int main()
 {
@@ -52,7 +45,7 @@ int main()
     // NOTE: State automatically closes at end of scope
     LStatePtr L;
 
-    
+
 
     return 0;
 }
