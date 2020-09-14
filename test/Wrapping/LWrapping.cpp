@@ -79,30 +79,34 @@ bool LuaCall(lua_State* _State, int _CallResult)
  * Push a value onto the Lua stack
  **/
 template<typename T>
-void LuaPushValue(lua_State* _State, const T& _Value)
+void LuaPushValue(lua_State* _State, T _Value)
 {
+    // Unused
+    (void)(_State);
+    (void)(_Value);
+
     printf("Lua (LuaPushValue) [Error]: Unable to push value of type: %s\n", typeid(T).name());
 }
 
 /* LuaPushValue: Number */
 template<>
-void LuaPushValue(lua_State* _State, const lua_Number& _Number)
+void LuaPushValue(lua_State* _State, lua_Number _Number)
 {
     lua_pushnumber(_State, _Number);
 }
 
 /* LuaPushValue: String */
 template<>
-void LuaPushValue(lua_State* _State, const std::string_view& _Number)
+void LuaPushValue(lua_State* _State, const char* _String)
 {
-    lua_pushstring(_State, _Number.data());
+    lua_pushstring(_State, _String);
 }
 
 /* LuaPushValue: Boolean */
 template<>
-void LuaPushValue(lua_State* _State, const bool& _Number)
+void LuaPushValue(lua_State* _State, bool _Boolean)
 {
-    lua_pushboolean(_State, _Number);
+    lua_pushboolean(_State, _Boolean);
 }
 
 /**
@@ -176,6 +180,14 @@ int main()
         // 1 -> Function takes 1 value
         // 0 -> Function returns 0 values
         // 0 -> "errfunc"
+        lua_pcall(L, 1, 0, 0);
+    }
+
+    // Same as last time but calling function with a String argument
+    L_GetGlobal(L, "LuaPrint");
+    if (L_IsFunction(L, LUA_TOP))
+    {
+        LuaPush(L, "Giving this message to Lua for printing...");
         lua_pcall(L, 1, 0, 0);
     }
 
