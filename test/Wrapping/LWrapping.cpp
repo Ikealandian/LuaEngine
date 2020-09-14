@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string_view>
 #include <memory>
 
 // Include Lua.hpp
