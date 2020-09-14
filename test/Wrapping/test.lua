@@ -1,8 +1,12 @@
+function LuaPrint(Text)
+    print("LUA", Text);
+end
+
 function HelloLua(fromC)
     if not fromC then
-        print("Hello, from Lua!")
+        LuaPrint("Hello, from Lua!")
     else
-        print("Hello, from C++!")
+        LuaPrint("Hello, from C++!")
     end
 end
 
