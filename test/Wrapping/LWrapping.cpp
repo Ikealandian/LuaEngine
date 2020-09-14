@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string_view>
 #include <memory>
 
 // Include Lua.hpp
@@ -76,7 +77,55 @@ bool LuaCall(lua_State* _State, int _CallResult)
 }
 
 /**
+ * Push a value onto the Lua stack
  **/
+template<typename T>
+void LuaPushValue(lua_State* _State, const T& _Value)
+{
+    printf("Lua (LuaPushValue) [Error]: Unable to push value of type: %s\n", typeid(T).name());
+}
+
+/* LuaPushValue: Number */
+template<>
+void LuaPushValue(lua_State* _State, const lua_Number& _Number)
+{
+    lua_pushnumber(_State, _Number);
+}
+
+/* LuaPushValue: String */
+template<>
+void LuaPushValue(lua_State* _State, const std::string_view& _Number)
+{
+    lua_pushstring(_State, _Number.data());
+}
+
+/* LuaPushValue: Boolean */
+template<>
+void LuaPushValue(lua_State* _State, const bool& _Number)
+{
+    lua_pushboolean(_State, _Number);
+}
+
+/**
+ * Push multiple values onto the Lua stack
+ **/
+template<typename First, typename ... Others>
+void LuaPush(lua_State* _State, First _First, const Others& ... _Other)
+{
+    // Push the first value
+    LuaPushValue(_State, _First);
+
+    // Keep calling LuaPush until _Other has no other arguments
+    LuaPush(_State, _Other ...);
+}
+
+/* LuaPush: No more arguments */
+void LuaPush(lua_State* _State)
+{
+    // Unused
+    (void)(_State);
+}
+
 /********************************/
 /** Useful Lua function macros **/
 /********************************/
