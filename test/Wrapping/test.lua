@@ -1,7 +1,9 @@
 function HelloLua(fromC)
     if not fromC then
         print("Hello, from Lua!")
-    else 
+    else
         print("Hello, from C++!")
     end
 end
+
+HelloLua(false)
