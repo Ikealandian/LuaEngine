@@ -162,7 +162,23 @@ int main()
     luaL_openlibs(L);
 
     // Run the test script
-    L_LRunFile(L, "test/Wrapping/test.lua");
+    L_RunFile(L, "test/Wrapping/test.lua");
+
+    // Move global HelloLua to top of stack
+    L_GetGlobal(L, "HelloLua");
+
+    // Make sure HelloLua (top of stack) is a function
+    if (L_IsFunction(L, LUA_TOP))
+    {
+        // Push a boolean arugment
+        LuaPush(L, true);
+
+        // Call function at the top of the stack
+        // 1 -> Function takes 1 value
+        // 0 -> Function returns 0 values
+        // 0 -> "errfunc"
+        lua_pcall(L, 1, 0, 0);
+    }
 
     return 0;
 }
