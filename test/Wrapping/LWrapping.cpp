@@ -76,10 +76,32 @@ bool LuaCall(lua_State* _State, int _CallResult)
 }
 
 /**
- * Useful Lua function macros
  **/
-#define L_LoadFile(L, F) LuaCall(L, luaL_loadfile(L, F))
-#define L_LRunFile(L, F) LuaCall(L, luaL_dofile(L, F))
+/********************************/
+/** Useful Lua function macros **/
+/********************************/
+
+/**
+ * Run and Loading Lua scripts
+ **/
+#define L_LoadFile(L, F)    LuaCall(L, luaL_loadfile(L, F))
+#define L_LoadStr(L, F)     LuaCall(L, luaL_loadstring(L, F))
+#define L_RunFile(L, F)     LuaCall(L, luaL_dofile(L, F))
+#define L_RunStr(L, F)      LuaCall(L, luaL_dostring(L, F))
+
+/**
+ * Lua stack helpers
+ **/
+#define L_GetGlobal(L, N)   lua_getglobal(L, N)
+
+/**
+ * Lua stack check types
+ **/
+#define L_LuaType(L, S)     lua_type(L, S) 
+#define L_IsNumber(L, S)    lua_isnumber(L, S)
+#define L_IsString(L, S)    lua_isstring(L, S)
+#define L_IsFunction(L, S)  lua_isfunction(L, S)
+#define L_IsNil(L, S)       lua_isnil(L, S)
 
 int main()
 {
