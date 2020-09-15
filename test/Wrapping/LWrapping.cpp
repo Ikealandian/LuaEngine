@@ -213,6 +213,11 @@ void LuaCallFunction(lua_State* _State, const Function& _Function, First _First,
         // Call the function
         lua_pcall(_State, _Function.InputArguments, _Function.ReturnValues, 0);
     }
+    // Not a Function
+    else
+    {
+        printf("Lua (LuaCallFunction) [Error]: Unable to call a non-Function value\n");
+    }
 }
 
 int main()
