@@ -271,5 +271,19 @@ int main()
         }
     }
 
+    // Define the Square function
+    Function LuaSquare          = { };
+    LuaSquare.Name              = "Square";
+    LuaSquare.InputArguments    = 1;
+    LuaSquare.ReturnValues      = 1;
+
+    // Call the Square function
+    // State, Function, Any Arguments to Push ...
+    LuaCallFunction(L, LuaSquare, 5);
+
+    // Get Return value at LUA_TOP
+    double Square = LuaPopNumber(L);
+    printf("C++\tSquare(5) = %f\n", Square);
+
     return 0;
 }
