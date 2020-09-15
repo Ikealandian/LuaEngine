@@ -88,9 +88,16 @@ void LuaPushValue(lua_State* _State, T _Value)
     printf("Lua (LuaPushValue) [Error]: Unable to push value of type: %s\n", typeid(T).name());
 }
 
-/* LuaPushValue: Number */
+/* LuaPushValue: Int */
 template<>
-void LuaPushValue(lua_State* _State, lua_Number _Number)
+void LuaPushValue(lua_State* _State, int _Number)
+{
+    lua_pushnumber(_State, _Number);
+}
+
+/* LuaPushValue: Double */
+template<>
+void LuaPushValue(lua_State* _State, double _Number)
 {
     lua_pushnumber(_State, _Number);
 }
