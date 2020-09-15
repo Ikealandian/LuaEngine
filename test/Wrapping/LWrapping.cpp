@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory>
+#include <string>
 
 // Include Lua.hpp
 #include <lua.hpp>
