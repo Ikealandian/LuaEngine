@@ -284,11 +284,11 @@ int main()
 
     // Call the Square function
     // State, Function, Any Arguments to Push ...
-    LuaCallFunction(L, LuaSquare, 5);
+    LuaCallFunction(L, LuaSquare, 10);
 
     // Get Return value at LUA_TOP
     double Square = LuaPopNumber(L);
-    printf("C++\tSquare(5) = %f\n", Square);
+    printf("C++\tSquare(10) = %f\n", Square);
 
     return 0;
 }
