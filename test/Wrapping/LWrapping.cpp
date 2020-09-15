@@ -198,5 +198,25 @@ int main()
         lua_pcall(L, 1, 0, 0);
     }
 
+    L_GetGlobal(L, "Square");
+    if (L_IsFunction(L, LUA_TOP))
+    {
+        // Push mnumber 5 into function Square
+        // expect 5 * 5 as return value
+        LuaPush(L, 5);
+
+        // 1 -> Function takes 1 value
+        // 1 -> Function returns 0 values
+        // 0 -> still an "errfunc"
+        lua_pcall(L, 1, 1, 0);
+
+        // Returned number should be at the top of the stack
+        if (L_IsNumber(L, LUA_TOP))
+        {
+            double Square = lua_tonumber(L, LUA_TOP);
+            printf("C++\tSquare(5) = %f\n", Square);
+        }
+    }
+
     return 0;
 }
