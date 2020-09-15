@@ -136,6 +136,28 @@ void LuaPush(lua_State* _State)
     (void)(_State);
 }
 
+/**
+ * Pop a value off of the Lua stack
+ **/
+
+// LuaPopNumber
+lua_Number LuaPopNumber(lua_State* _State)
+{
+    lua_Number Top = lua_tonumber(_State, LUA_TOP);
+    lua_pop(_State, 1);
+
+    return Top;
+}
+
+// LuaPopString
+std::string LuaPopString(lua_State* _State)
+{
+    std::string Top = lua_tostring(_State, LUA_TOP);
+    lua_pop(_State, 1);
+
+    return Top;
+}
+
 /********************************/
 /** Useful Lua function macros **/
 /********************************/
