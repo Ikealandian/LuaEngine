@@ -1,3 +1,7 @@
+function Square(Number)
+    return Number * Number
+end
+
 function LuaPrint(Text)
     print("LUA", Text);
 end
