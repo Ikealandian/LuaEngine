@@ -162,6 +162,36 @@ void LuaPush(lua_State* _State)
 #define L_IsFunction(L, S)  lua_isfunction(L, S)
 #define L_IsNil(L, S)       lua_isnil(L, S)
 
+/**
+ * Lua function defintion
+ **/
+typedef struct _LFuncDef
+{
+    std::string Name;
+    int ReturnValues;
+    int InputArguments;
+}Function;
+
+/**
+ * Call a Lua function from C++
+ **/
+template<typename First, typename ... Others>
+void LuaCallFunction(lua_State* _State, const Function& _Function, First _First, const Others& ... _Other)
+{
+    // Get the function
+    L_GetGlobal(_State, _Function.Name.c_str());
+
+    // Check if its a function
+    if (L_IsFunction(_State, LUA_TOP))
+    {
+        // Push Arguments
+        LuaPush(_State, _First, _Other ...);
+
+        // Call the function
+        lua_pcall(_State, _Function.InputArguments, _Function.ReturnValues, 0);
+    }
+}
+
 int main()
 {
     // Create a new Lua state
