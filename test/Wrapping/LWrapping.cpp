@@ -224,6 +224,77 @@ void LuaCallFunction(lua_State* _State, const Function& _Function, First _First,
     }
 }
 
+/**
+ * Functions to give to Lua
+ **/
+
+/* Lua Write to File */
+int Lua_WriteFile(lua_State* L)
+{
+    static std::string Path = "test/Wrapping/tmp/test_tmp/";
+
+    std::string NewContents = LuaPopString(L);
+    std::string OriginalPath = LuaPopString(L);
+    std::string NewPath = basename(OriginalPath.data());
+    NewPath = Path + NewPath;
+
+    printf("C++\tWriting to: %s\n", NewPath.c_str());
+
+    std::ofstream Stream;
+    Stream.open(NewPath);
+
+    if (Stream.is_open())
+    {
+        Stream << NewContents;
+        LuaPush(L, true);
+    }
+    else
+    {
+        // Failed to open file
+        LuaPush(L, false);
+    }
+
+    Stream.close();
+
+    return 1;
+}
+
+/* Lua Read */
+int Lua_ReadFile(lua_State* L)
+{
+    static std::string Path = "test/Wrapping/tmp/test_tmp/";
+
+    std::string OriginalPath = LuaPopString(L);
+    std::string NewPath = basename(OriginalPath.data());
+    NewPath = Path + NewPath;
+
+    printf("C++\tReading from: %s\n", NewPath.c_str());
+
+    std::ifstream Stream;
+    Stream.open(NewPath);
+
+    if (Stream.is_open())
+    {
+        std::string FileContents;
+        std::string Line;
+        while (getline(Stream, Line))
+        {
+            FileContents += Line;
+            FileContents += '\n';
+        }
+        LuaPush(L, true, FileContents.c_str());
+    }
+    else
+    {
+        // Failed to open file
+        LuaPush(L, false, NULL);
+    }
+
+    Stream.close();
+
+    return 2;
+}
+
 int main()
 {
     // Create a new Lua state
