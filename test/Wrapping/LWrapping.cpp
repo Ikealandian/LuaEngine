@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <memory>
 #include <string>
+#include <fstream>
+
+// Linux Only
+#include <libgen.h>
 
 // Include Lua.hpp
 #include <lua.hpp>
