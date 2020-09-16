@@ -304,6 +304,15 @@ int main()
     // Open Lua libraries
     luaL_openlibs(L);
 
+    // Register C++ Functions for Lua
+    // Write File
+    lua_pushcfunction(L, Lua_WriteFile);
+    lua_setglobal(L, "FileW");
+
+    // Read File
+    lua_pushcfunction(L, Lua_ReadFile);
+    lua_setglobal(L, "FileR");
+
     // Run the test script
     L_RunFile(L, "test/Wrapping/test.lua");
 
