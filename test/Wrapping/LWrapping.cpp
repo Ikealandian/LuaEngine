@@ -225,6 +225,18 @@ void LuaCallFunction(lua_State* _State, const Function& _Function, First _First,
 }
 
 /**
+ * Register a C++ function for Lua
+ **/
+void LuaRegisterFunction(lua_State* _State, const char* _Name, lua_CFunction _Function)
+{
+    // Push the function to the stack
+    lua_pushcfunction(_State, _Function);
+
+    // Name the function
+    lua_setglobal(_State, _Name);
+}
+
+/**
  * Functions to give to Lua
  **/
 
@@ -306,12 +318,11 @@ int main()
 
     // Register C++ Functions for Lua
     // Write File
-    lua_pushcfunction(L, Lua_WriteFile);
-    lua_setglobal(L, "FileW");
+    LuaRegisterFunction(L, "FileW", Lua_WriteFile);
 
     // Read File
-    lua_pushcfunction(L, Lua_ReadFile);
-    lua_setglobal(L, "FileR");
+    LuaRegisterFunction(L, "FileR", Lua_ReadFile);
+
 
     // Run the test script
     L_RunFile(L, "test/Wrapping/test.lua");
