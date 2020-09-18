@@ -89,6 +89,19 @@ void LEF_RegisterCFunction(
 #define L_IsNil             lua_isnil
 
 /**
+ * Type getters
+ **/
+#define L_GetNumber         lua_tonumber
+#define L_GetString         lua_tostring
+#define L_GetTable          /* no function */
+#define L_GetBoolean        lua_toboolean
+#define L_GetUserdata       lua_touserdata
+#define L_GetLightUserData  /* no function */
+#define L_GetFunction       lua_tocfunction
+#define L_GetThread         lua_tothread
+#define L_GetNil            /* no function */
+
+/**
  * Pushing and Executing scripts on the stack
  **/
 #define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S))
