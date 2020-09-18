@@ -46,8 +46,16 @@ int main(int, char**)
     // Automatically Creates and Destroys
     LState L;
 
+    luaL_openlibs(L);
+
+    // Register LuaPrint
+    // TODO: Push wrapper for Lua
+    lua_pushcfunction(L, LuaPrint);
+    // Set function name as print
+    L_SetGlobal(L, "print");
+
     std::string Script = R"(
-        print("LUA", "Hello!")
+        print("LUA\t", "Hello: ", true)
     )";
 
     L_RunScript(L, Script.c_str());
