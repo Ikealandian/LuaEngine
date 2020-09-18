@@ -17,7 +17,7 @@
 /**
  * Verify Lua function results
  **/
-void LuaCall(
+bool LuaCall(
     LRawState _State, int _LFuncResult
 );
 
