@@ -323,7 +323,6 @@ int main()
     // Read File
     LuaRegisterFunction(L, "FileR", Lua_ReadFile);
 
-
     // Run the test script
     L_RunFile(L, "test/Wrapping/test.lua");
 

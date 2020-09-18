@@ -14,7 +14,7 @@ function HelloLua(fromC)
     end
 end
 
-local Success = FileW("Text.txt", "New File Contents")
+local Success = FileW("Text.txt", "New Files Contents")
 if Success then
     LuaPrint("Successfully wrote to 'Text.txt'!");
     local RSuccess, Contents = FileR("Text.txt");
