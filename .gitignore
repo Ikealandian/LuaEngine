@@ -1,3 +1,11 @@
 
 *.o
 .vscode/settings.json
+archive/Profiling-Allocation Test/LAllocTest.hpp
+archive/Profiling-Allocation Test/LProfiling.cpp
+archive/Profiling-Allocation Test/LProfiling.hpp
+archive/Profiling-Allocation Test/LTest.cpp
+archive/Profiling-Allocation Test/LTest.lua
+archive/Wrapping/LWrapping.cpp
+archive/Wrapping/test.lua
+archive/Wrapping/tmp/test_tmp/Text.txt
