@@ -53,13 +53,6 @@ enum class LCompare
 /** Lua Functions { **/
 
 /**
- * Gets global and checks type
- **/
-LCompare LEF_GetAndCompare(
-    LRawState _State, const char* _GlobalName, LTypes _Type
-);
-
-/**
  * Register a C function for Lua
  **/
 void LEF_RegisterCFunction(
