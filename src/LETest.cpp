@@ -46,19 +46,31 @@ int main(int, char**)
     // Automatically Creates and Destroys
     LState L;
 
-    luaL_openlibs(L);
-
     // Register LuaPrint
-    // TODO: Push wrapper for Lua
-    lua_pushcfunction(L, LuaPrint);
-    // Set function name as print
-    L_SetGlobal(L, "print");
+    LEF_RegisterCFunction(L, "print", LuaPrint);
 
     std::string Script = R"(
-        print("LUA\t", "Hello: ", true)
+        function add(a, b)
+            return a + b
+        end
+
+        print("add(6, 4) = ", add(6, 4))
     )";
 
     L_RunScript(L, Script.c_str());
+
+    // Define Lua function
+    LFunction AddFun        = {};
+    AddFun.Name             = "add";
+    AddFun.InputArguments   = 2;
+    AddFun.ReturnValues     = 1;
+
+    // Call add from Lua
+    if (LEF_CallLuaFunction(L, AddFun, 4, 4))
+    {
+        double Result = LuaPopNumber(L);
+        printf("add(4, 4) = %d\n", (int)Result);
+    }
 
     return 0;
 }
