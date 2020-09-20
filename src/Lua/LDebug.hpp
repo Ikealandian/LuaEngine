@@ -11,14 +11,18 @@
 // Include Lua State
 #include <Lua/LState.hpp>
 
-// Include Lua Stack
-#include <Lua/LStack.hpp>
-
 /**
  * Verify Lua function results
  **/
 bool LuaCall(
     LRawState _State, int _LFuncResult
+);
+
+/**
+ * Verify Stack type
+ **/
+bool LuaVerifyType(
+    LRawState _State, int _LType, int _Index
 );
 
 #endif
