@@ -47,7 +47,7 @@ int main(int, char**)
     LState L;
 
     // Register LuaPrint
-    LEF_RegisterCFunction(L, "print", LuaPrint);
+    L_RegFunc(L, "print", LuaPrint);
 
     std::string Script = R"(
         function add(a, b)
@@ -66,7 +66,7 @@ int main(int, char**)
     AddFun.ReturnValues     = 1;
 
     // Call add from Lua
-    if (LEF_CallLuaFunction(L, AddFun, 4, 4))
+    if (L_CallFunc(L, AddFun, 4, 4))
     {
         double Result = LuaPopNumber(L);
         printf("add(4, 4) = %d\n", (int)Result);
