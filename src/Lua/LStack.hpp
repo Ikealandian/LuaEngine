@@ -98,8 +98,8 @@ enum class LCompare : int
 /**
  * Lua function macros
  **/
-#define L_CallFunc
-#define L_RegFunc
+#define L_CallFunc          LEF_CallLuaFunction
+#define L_RegFunc           LEF_RegisterCFunction
 
 /** Lua Macros } **/
 ////////////////////
