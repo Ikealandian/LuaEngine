@@ -112,42 +112,39 @@ enum class LCompare : int
  * Push a value onto the Lua stack
  **/
 template<typename T>
-inline void LuaPushValue(LRawState _State, T _Value)
-{
-    // Unused
-    (void)(_State);
-    (void)(_Value);
-
-    printf("Push\tUnable to push value of type: %s\n", typeid(T).name());
-}
+void LuaPushValue(
+    LRawState _State, T _Value
+);
 
 /* LuaPushValue: Int */
 template<>
-inline void LuaPushValue(LRawState _State, int _Number)
-{
-    lua_pushnumber(_State, _Number);
-}
+void LuaPushValue(
+    LRawState _State, int _Number
+);
 
 /* LuaPushValue: Double */
 template<>
-inline void LuaPushValue(LRawState _State, double _Number)
-{
-    lua_pushnumber(_State, _Number);
-}
+void LuaPushValue(
+    LRawState _State, double _Number
+);
 
 /* LuaPushValue: String */
 template<>
-inline void LuaPushValue(LRawState _State, const char* _String)
-{
-    lua_pushstring(_State, _String);
-}
+void LuaPushValue(
+    LRawState _State, const char* _String
+);
 
 /* LuaPushValue: Boolean */
 template<>
-inline void LuaPushValue(LRawState _State, bool _Boolean)
-{
-    lua_pushboolean(_State, _Boolean);
-}
+void LuaPushValue(
+    LRawState _State, bool _Boolean
+);
+
+/* LuaPushValue: CFunction */
+template<>
+void LuaPushValue(
+    LRawState _State, lua_CFunction _Function
+);
 
 /** Push Value } **/
 ////////////////////
@@ -160,20 +157,17 @@ inline void LuaPushValue(LRawState _State, bool _Boolean)
 /**
  * No more arguments to push to the Lua stack
  **/
-inline void LuaPush(LRawState) { }
+void LuaPush(
+    LRawState
+);
 
 /**
  * Push multiple values onto the Lua stack
  **/
 template<typename T, typename ...R>
-inline void LuaPush(LRawState _State, const T& _First, const R&... _Rest)
-{
-    // Push _FirstArg value
-    LuaPushValue(_State, _First);
-
-    // Keep calling LuaPush until all args are pushed
-    LuaPush(_State, _Rest...);
-}
+void LuaPush(
+    LRawState _State, const T& _First, const R&... _Rest
+);
 
 /** Push } **/
 //////////////
@@ -183,33 +177,19 @@ inline void LuaPush(LRawState _State, const T& _First, const R&... _Rest)
 /////////////
 /** Pop { **/
 
-// LuaPopNumber
-inline lua_Number LuaPopNumber(LRawState _State)
-{
-    // Verify top element is a Number
-    if (!LuaVerifyType(_State, (int)LTypes::Number, LUA_TOP))
-        return (lua_Number)NULL;
-    // Get the top element off the Lua stack
-    lua_Number Top = lua_tonumber(_State, LUA_TOP);
-    // Pop off the top element
-    lua_pop(_State, 1);
-    // Return Top number
-    return Top;
-}
+/**
+ * Pop a Lua number off the top of the stack
+ **/
+lua_Number LuaPopNumber(
+    LRawState _State
+);
 
-// LuaPopString
-inline const char* LuaPopString(LRawState _State)
-{
-    // Verify top element is a String
-    if (!LuaVerifyType(_State, (int)LTypes::String, LUA_TOP))
-        return NULL;
-    // Get the top element off the Lua stack
-    const char* Top = lua_tostring(_State, LUA_TOP);
-    // Pop off the top element
-    lua_pop(_State, 1);
-    // Return Top string
-    return Top;
-}
+/**
+ * Pop a Lua string off the top of the stack
+ **/
+const char* LuaPopString(
+    LRawState _State
+);
 
 /** Pop } **/
 /////////////
@@ -236,22 +216,7 @@ typedef struct _LFuncDef
 template<typename T, typename ...R>
 bool LEF_CallLuaFunction(
     LRawState _State, const LFunction& _Func, const T& _First, const R& ..._Rest
-) {
-    // Get the function
-    L_GetGlobal(_State, _Func.Name);
-    // Check if its a function
-    if (L_IsFunction(_State, LUA_TOP))
-    {
-        // Push Arguments
-        LuaPush(_State, _First, _Rest...);
-        // Call the function
-        return LuaCall(_State, lua_pcall(_State, _Func.InputArguments, _Func.ReturnValues, 0));
-    } else /* Not a Function */ {
-        // Cant call a nonFunction
-        printf("CallFun\tUnable to call a non-Function value\n");
-        return false;
-    }
-}
+);
 
 /** Lua Functions } **/
 ///////////////////////
