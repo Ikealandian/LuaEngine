@@ -126,10 +126,10 @@ struct Lua_Vector2
     static void Debug(LRawState L)
     {
         // Verify 
-        printf("LuaAdd\tDebugging {\n");
+        printf("LuaVec\tDebugging {\n");
         LuaVerifyType(L, LTypes::Table, LUA_FIRST, LE_DebugData);
         LuaVerifyType(L, LTypes::Table, LUA_SECOND, LE_DebugData);
-        printf("LuaAdd\t}\n");
+        printf("LuaVec\t}\n");
     }
 
     static int LuaAdd(LRawState L)
