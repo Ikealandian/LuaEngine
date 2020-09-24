@@ -230,13 +230,6 @@ typedef struct _LFuncDef
 }LFunction;
 
 /**
- * Register a C function for Lua
- **/
-void LEF_RegisterCFunction(
-    LRawState _State, const char* _GlobalName, lua_CFunction _CFunction
-);
-
-/**
  * LEF_CallLuaFunction Implementation
  *  Call Lua function from C
  **/
