@@ -103,6 +103,18 @@ enum class LCompare : int
 #define L_PushThread        lua_pushthread
 #define L_PushNil           lua_pushnil
 #define L_PushMetaTable     luaL_newmetatable
+
+/**
+ * Pushing values onto the Lua stack
+ **/
+#define L_Push              LuaPush
+#define L_PushValue         LuaPushValue
+#define L_PushFunc(L, N, F) (L_PushFunction(L, F), L_SetGlobal(L, N))
+
+/**
+ * Popping values from the Lua stack
+ **/
+
 /**
  * Pushing and Executing scripts on the stack
  **/
