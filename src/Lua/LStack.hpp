@@ -77,6 +77,7 @@ enum class LCompare : int
 /**
  * Type getters
  **/
+#define L_GetTop            lua_gettop
 #define L_GetNumber         lua_tonumber
 #define L_GetString         lua_tostring
 #define L_GetTable          /* no function */
