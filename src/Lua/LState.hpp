@@ -31,14 +31,14 @@ typedef struct LE_StateHandler
 
     // Return the raw pointer
     // Type: Explicit
-    lua_State* operator*()
+    LRawState operator*()
     {
         return lState;
     }
 
     // Return the raw pointer
     // Type: Implicit
-    operator lua_State*()
+    operator LRawState()
     {
         return lState;
     }
