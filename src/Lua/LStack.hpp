@@ -18,10 +18,10 @@
 #include <typeinfo>
 
 /* Lua stack positions */
-#define LUA_TOP         -1
-#define LUA_FIRST       LUA_TOP - 0
-#define LUA_SECOND      LUA_TOP - 1
-#define LUA_THIRD       LUA_TOP - 2
+#define LUA_TOP         (-1)
+#define LUA_FIRST       (LUA_TOP - 0)
+#define LUA_SECOND      (LUA_TOP - 1)
+#define LUA_THIRD       (LUA_TOP - 2)
 
 /**
  * Lua Types
