@@ -90,10 +90,10 @@ enum class LCompare : int
 /**
  * Pushing and Executing scripts on the stack
  **/
-#define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S))
-#define L_LoadFile(L, F)    LuaCall(L, luaL_loadfile(L, F))
-#define L_RunScript(L, S)   LuaCall(L, luaL_dostring(L, S))
-#define L_RunFile(L, F)     LuaCall(L, luaL_dofile(L, F))
+#define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S), LE_DebugData)
+#define L_LoadFile(L, F)    LuaCall(L, luaL_loadfile(L, F), LE_DebugData)
+#define L_RunScript(L, S)   LuaCall(L, luaL_dostring(L, S), LE_DebugData)
+#define L_RunFile(L, F)     LuaCall(L, luaL_dofile(L, F), LE_DebugData)
 
 /**
  * Lua function macros
