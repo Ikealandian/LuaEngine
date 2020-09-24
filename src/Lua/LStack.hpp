@@ -60,6 +60,7 @@ enum class LCompare : int
  **/
 #define L_SetGlobal         lua_setglobal
 #define L_GetGlobal         lua_getglobal
+#define L_SetField          lua_setfield
 
 /**
  * Type Checking
