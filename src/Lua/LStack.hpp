@@ -90,6 +90,20 @@ enum class LCompare : int
 #define L_GetNil            /* no function */
 
 /**
+ * Pushing types onto stack
+ **/
+#define L_PushIValue        lua_pushvalue
+#define L_PushNumber        lua_pushnumber
+#define L_PushString        lua_pushstring
+#define L_PushTable         lua_newtable
+#define L_PushBoolean       lua_pushboolean
+#define L_PushUserdata      lua_newuserdata
+#define L_PushLightUserData lua_pushlightuserdata
+#define L_PushFunction      lua_pushcfunction
+#define L_PushThread        lua_pushthread
+#define L_PushNil           lua_pushnil
+#define L_PushMetaTable     luaL_newmetatable
+/**
  * Pushing and Executing scripts on the stack
  **/
 #define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S), LE_DebugData)
