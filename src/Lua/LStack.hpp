@@ -221,6 +221,6 @@ bool LEF_CallLuaFunction(
 /** Lua Functions } **/
 ///////////////////////
 
-
+#include <Lua/LStack.inl>
 
 #endif
