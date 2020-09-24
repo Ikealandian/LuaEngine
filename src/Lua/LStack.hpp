@@ -116,6 +116,19 @@ enum class LCompare : int
  **/
 
 /**
+ * Metatable
+ **/
+#define L_MakeMeta(L, N)    (luaL_getmetatable(L, N), lua_setmetatable(L, LUA_SECOND))
+
+/**
+ * Tables
+ **/
+#define L_TGet(L, K, S)     (L_Push(L, K), lua_gettable(L, S - 1))
+#define L_TPush(L, K, V, S) (L_Push(L, K, V), lua_settable(L, S - 2))
+#define L_TPushR(L, K, V, S)(L_Push(L, K, V), lua_rawset(L, S - 2))
+#define L_TPushF(L, K, V, S)(L_Push(L, V), L_SetField(L, S - 1, K))
+
+/**
  * Pushing and Executing scripts on the stack
  **/
 #define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S), LE_DebugData)
@@ -131,6 +144,7 @@ enum class LCompare : int
 
 /** Lua Macros } **/
 ////////////////////
+
 
 
 ////////////////////
