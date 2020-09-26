@@ -65,6 +65,7 @@ enum class LCompare : int
 /**
  * Type Checking
  **/
+#define L_IsType(L, T, S)   ((LTypes)lua_type(L, S) == T)
 #define L_IsNumber          lua_isnumber
 #define L_IsString          lua_isstring
 #define L_IsTable           lua_istable
