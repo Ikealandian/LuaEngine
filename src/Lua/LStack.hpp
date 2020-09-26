@@ -78,11 +78,13 @@ enum class LCompare : int
 
 /**
  * Type getters
+ * TODO:
+ *  L_GetTable: LEF_GetTableContents
  **/
 #define L_GetTop            lua_gettop
 #define L_GetNumber         lua_tonumber
 #define L_GetString         lua_tostring
-#define L_GetTable          /* no function */
+#define L_GetTable          /* LEF_GetTableContents */
 #define L_GetBoolean        lua_toboolean
 #define L_GetUserdata       lua_touserdata
 #define L_GetLightUserData  /* no function */
