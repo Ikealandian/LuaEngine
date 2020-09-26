@@ -89,6 +89,12 @@ struct Lua_Vector2
 
     static int Create(LRawState L)
     {
+        if(L_IsType(L, LTypes::Table, LUA_TOP))
+        {
+            Lua_Vector2 CopyVec2 = Lua_Vector2::GetValues(L, LUA_TOP);
+            return Lua_Vector2::CreateRaw(L, CopyVec2.x, CopyVec2.y);
+        }
+
         // Get the X, Y arguments
         lua_Number Y = LuaPopNumber(L);
         lua_Number X = LuaPopNumber(L);
@@ -196,11 +202,14 @@ int main(int, char**)
             return a + b
         end
 
-        Vector1 = Vec2.new(2, 4)
-        Vector2 = Vec2.new(6, 8)
-        Vector3 = Vector1 - Vector2 
+        Vector1 = Vec2:new(2, 4)
+        Vector2 = Vec2:new(6, 8)
+        Vector3 = Vector1 - Vector2
 
-        print("Vector3:\n X: ", Vector3.x, "\n Y: ", Vector3.y)
+        Vector4 = Vec2:new(Vector3)
+        Vector4.x = Vector4.x + 4
+
+        print("Vector4:\n X: ", Vector4.x, "\n Y: ", Vector4.y)
         print("add(6, 4) = ", add(6, 4))
     )";
 
