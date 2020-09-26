@@ -164,6 +164,12 @@ void LuaPushValue(
     LRawState _State, int _Number
 );
 
+/* LuaPushValue: IValue */
+template<>
+void LuaPushValue(
+    LRawState, IValue _IdxValue
+);
+
 /* LuaPushValue: Double */
 template<>
 void LuaPushValue(
