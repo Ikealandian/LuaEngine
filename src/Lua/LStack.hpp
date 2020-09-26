@@ -147,6 +147,19 @@ enum class LCompare : int
 
 
 
+//////////////////
+/** Types { **/
+
+/**
+ * For specifying L_PushIValue for L_Push
+ **/
+typedef long IValue;
+
+/** Types } **/
+//////////////////
+
+
+
 ////////////////////
 /** Push Value { **/
 
