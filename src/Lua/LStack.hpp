@@ -99,6 +99,7 @@ enum class LCompare : int
 #define L_PushNumber        lua_pushnumber
 #define L_PushString        lua_pushstring
 #define L_PushTable         lua_newtable
+#define L_PushGTable        LEF_NewGlobalTable
 #define L_PushBoolean       lua_pushboolean
 #define L_PushUserdata      lua_newuserdata
 #define L_PushLightUserData lua_pushlightuserdata
