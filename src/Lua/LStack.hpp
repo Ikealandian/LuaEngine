@@ -266,6 +266,13 @@ bool LEF_CallLuaFunction(
     LRawState _State, const LFunction& _Func, const T& _First, const R& ..._Rest
 );
 
+/**
+ * Push new global Lua table
+ **/
+IValue LEF_NewGlobalTable(
+    LRawState _State, const char* _Name
+);
+
 /** Lua Functions } **/
 ///////////////////////
 
