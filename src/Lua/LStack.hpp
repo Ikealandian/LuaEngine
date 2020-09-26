@@ -129,6 +129,14 @@ enum class LCompare : int
 #define L_TPushF(L, K, V, S)(L_Push(L, V), L_SetField(L, S - 1, K))
 
 /**
+ * Tables macro name simplification
+ **/
+#define L_TablePush         L_TPush
+#define L_TableGet          L_TGet
+#define L_TablePushRaw      L_TPushR
+#define L_TablePushField    L_TPushF
+
+/**
  * Pushing and Executing scripts on the stack
  **/
 #define L_LoadScript(L, S)  LuaCall(L, luaL_loadstring(L, S), LE_DebugData)
