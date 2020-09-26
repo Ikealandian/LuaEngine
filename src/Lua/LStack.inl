@@ -29,6 +29,14 @@ inline void LuaPushValue(LRawState _State, int _Number)
     L_PushNumber(_State, _Number);
 }
 
+/* LuaPushValue: IValue */
+template<>
+inline void LuaPushValue(LRawState _State, IValue _IdxValue)
+{
+    // Lua push index value
+    L_PushIValue(_State, _IdxValue);
+}
+
 /* Inline Impl */
 /* LuaPushValue: Double */
 template<>
