@@ -24,7 +24,7 @@ const char* GetLuaString(LRawState L, int _StackIndex)
 int LuaPrint(LRawState L)
 {
     // Get # of arguments passed
-    int Arguments = lua_gettop(L);
+    int Arguments = L_GetTop(L);
 
     // Loop through arguments
     for (int i = Arguments - 1; i > -1; i--)
@@ -47,31 +47,44 @@ struct Lua_Vector2
 
     static void Init(LRawState L)
     {
-        // Define the Vector metatable
-        L_PushMetaTable(L, "LuaVec2MetaTable");
-
-        // Push destroy (garbage collection)
-        L_TPush(L, "__gc", Lua_Vector2::Destroy, LUA_TOP);
-        // Push add function
-        L_TPush(L, "__add", Lua_Vector2::LuaAdd, LUA_TOP);
-        // Push sub function
-        L_TPush(L, "__sub", Lua_Vector2::LuaSub, LUA_TOP);
+        // Make into a macro? //
+        /* {
 
         // Create a new table
         L_PushTable(L);
 
         // Get Table position on the Lua stack
-        int TablePosition = L_GetTop(L);
+        IValue TablePosition = L_GetTop(L);
         // Push index back
         L_PushIValue(L, TablePosition);
 
         // Give the table a name
         L_SetGlobal(L, "Vec2");
 
+        } */
+        // Marcro:
+
+        // Push a new global Lua table
+        // And name it "Vec2"
+        IValue IVec2 = L_PushGTable(L, "Vec2");
+        // IVec2 equal to the table position on stack
+
         // Push create function onto Vector2 table
-        L_TPushF(L, "new", Lua_Vector2::Create, LUA_TOP);
+        L_TablePushField(L, "new", Lua_Vector2::Create, LUA_TOP);
         // Push zero function onto Vector2 table
-        L_TPushF(L, "zero", Lua_Vector2::CreateZero, LUA_TOP);
+        L_TablePushField(L, "zero", Lua_Vector2::CreateZero, LUA_TOP);
+
+        // Define the Vector metatable
+        L_PushMetaTable(L, "LuaVec2MetaTable");
+
+        // Push index table
+        L_TablePush(L, "__index", IVec2, LUA_TOP);
+        // Push destroy (garbage collection)
+        L_TablePush(L, "__gc", Lua_Vector2::Destroy, LUA_TOP);
+        // Push add function
+        L_TablePush(L, "__add", Lua_Vector2::LuaAdd, LUA_TOP);
+        // Push sub function
+        L_TablePush(L, "__sub", Lua_Vector2::LuaSub, LUA_TOP);
     }
 
     static int Create(LRawState L)
@@ -96,8 +109,8 @@ struct Lua_Vector2
 
         // Push item x to be the value of X on the table
         // and item y to be the value of Y on the table
-        L_TPush(L, "x", X, LUA_TOP);
-        L_TPush(L, "y", Y, LUA_TOP);
+        L_TablePushRaw(L, "x", X, LUA_TOP);
+        L_TablePushRaw(L, "y", Y, LUA_TOP);
 
         // Make the top Table a metatable 
         L_MakeMeta(L, "LuaVec2MetaTable");
@@ -113,13 +126,13 @@ struct Lua_Vector2
 
     static Lua_Vector2 GetValues(LRawState L, int Table)
     {
-        // Get left X coord
-        L_TGet(L, "x", Table);
+        // Get X coord
+        L_TableGet(L, "x", Table);
         lua_Number X = LuaPopNumber(L);
-        // Get left Y coord
-        L_TGet(L, "y", Table);
+        // Get Y coord
+        L_TableGet(L, "y", Table);
         lua_Number Y = LuaPopNumber(L);
-
+        // Return
         return { X, Y };
     }
 
