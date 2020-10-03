@@ -269,6 +269,13 @@ const char* LuaPopString(
     LRawState _State
 );
 
+/**
+ * Pop a Lua pointer off the top of the stack
+ **/
+void* LuaPopUserdata(
+    LRawState _State
+);
+
 /** Pop } **/
 /////////////
 
