@@ -144,7 +144,7 @@ inline lua_Number LuaPopNumber(LRawState _State)
     if (!LuaVerifyType(_State, LTypes::Number, LUA_TOP, LE_DebugData))
         return (lua_Number)NULL;
     // Get the top element off the Lua stack
-    lua_Number Top = lua_tonumber(_State, LUA_TOP);
+    lua_Number Top = L_GetNumber(_State, LUA_TOP);
     // Pop off the top element
     lua_pop(_State, 1);
     // Return Top number
