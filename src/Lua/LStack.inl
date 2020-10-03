@@ -4,6 +4,18 @@
 
 // _inl LStack Impl
 
+
+
+/**
+ * IValue Literal
+ **/
+inline IValue operator "" iv(unsigned long long _iv)
+{
+    return (IValue)_iv;
+}
+
+
+
 ////////////////////
 /** Push Value { **/
 
