@@ -24,12 +24,8 @@ inline IValue operator "" iv(unsigned long long _iv)
  * Push a value onto the Lua stack
  **/
 template<typename T>
-inline void LuaPushValue(LRawState _State, T _Value)
+inline void LuaPushValue(LRawState, T)
 {
-    // Unused
-    (void)(_State);
-    (void)(_Value);
-
     printf("Push\tUnable to push value of type: %s\n", typeid(T).name());
 }
 
