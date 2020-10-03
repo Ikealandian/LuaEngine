@@ -151,6 +151,7 @@ inline lua_Number LuaPopNumber(LRawState _State)
     return Top;
 }
 
+/* Inline Impl */
 // LuaPopString
 inline const char* LuaPopString(LRawState _State)
 {
@@ -158,7 +159,22 @@ inline const char* LuaPopString(LRawState _State)
     if (!LuaVerifyType(_State, LTypes::String, LUA_TOP, LE_DebugData))
         return NULL;
     // Get the top element off the Lua stack
-    const char* Top = lua_tostring(_State, LUA_TOP);
+    const char* Top = L_GetString(_State, LUA_TOP);
+    // Pop off the top element
+    lua_pop(_State, 1);
+    // Return Top string
+    return Top;
+}
+
+/* Inline Impl */
+// LuaPopUserdata
+inline void* LuaPopUserdata(LRawState _State)
+{
+    // Verify top element is a String
+    if (!LuaVerifyType(_State, LTypes::Userdata, LUA_TOP, LE_DebugData))
+        return NULL;
+    // Get the top element off the Lua stack
+    void* Top = L_GetUserdata(_State, LUA_TOP);
     // Pop off the top element
     lua_pop(_State, 1);
     // Return Top string
