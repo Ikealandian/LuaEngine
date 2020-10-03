@@ -165,7 +165,12 @@ enum class LCompare : int
 /**
  * For specifying L_PushIValue for L_Push
  **/
-typedef long IValue;
+typedef long long IValue;
+
+/**
+ * IValue literal
+ **/
+IValue operator "" iv(unsigned long long _iv);
 
 /** Types } **/
 //////////////////
