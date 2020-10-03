@@ -255,6 +255,19 @@ void LuaPush(
 /////////////
 /** Pop { **/
 
+/** TODO: Use Debugging **/
+
+/**
+ * Template Pop
+ **/
+template<typename T, LTypes LT>
+T LuaPop(LRawState);
+
+/* Inline Impl */
+// Pop Number
+template<LTypes LT = LTypes::Number>
+lua_Number LuaPop(LRawState _State);
+
 /**
  * Pop a Lua number off the top of the stack
  **/
