@@ -22,4 +22,7 @@
 // Lua Stack Manipulation
 #include <Lua/LStack.hpp>
 
+// Allocator
+#include <Allocator.hpp>
+
 #endif
