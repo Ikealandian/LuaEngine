@@ -117,6 +117,26 @@ inline void LuaPush(LRawState _State, const T& _First, const R&... _Rest)
 /////////////
 /** Pop { **/
 
+/* Inline Impl */
+/**
+ * Template Pop
+ **/
+template<typename T, LTypes LT>
+inline T LuaPop(LRawState)
+{
+    printf("Pop \tUnable to pop value of null type.\n");
+    return nullptr;
+}
+
+/* Inline Impl */
+// Pop Number
+template<LTypes LT = LTypes::Number>
+inline lua_Number LuaPop(LRawState _State)
+{
+    return LuaPopNumber(_State);
+}
+
+/* Inline Impl */
 // LuaPopNumber
 inline lua_Number LuaPopNumber(LRawState _State)
 {
