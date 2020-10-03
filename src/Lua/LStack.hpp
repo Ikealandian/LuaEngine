@@ -128,6 +128,7 @@ enum class LCompare : int
  * Tables
  **/
 #define L_TGet(L, K, S)     (L_Push(L, K), lua_gettable(L, S - 1))
+#define L_TGetR(L, K, S)    (L_Push(L, K), lua_rawget(L, S - 1))
 #define L_TPush(L, K, V, S) (L_Push(L, K, V), lua_settable(L, S - 2))
 #define L_TPushR(L, K, V, S)(L_Push(L, K, V), lua_rawset(L, S - 2))
 #define L_TPushF(L, K, V, S)(L_Push(L, V), L_SetField(L, S - 1, K))
@@ -135,8 +136,9 @@ enum class LCompare : int
 /**
  * Tables macro name simplification
  **/
-#define L_TablePush         L_TPush
 #define L_TableGet          L_TGet
+#define L_TableGetRaw       L_TGetR
+#define L_TablePush         L_TPush
 #define L_TablePushRaw      L_TPushR
 #define L_TablePushField    L_TPushF
 
