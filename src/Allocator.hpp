@@ -5,7 +5,7 @@
 #ifndef _LE_ALLOCATOR_HPP_
 #define _LE_ALLOCATOR_HPP_
 
-#include <vector>
+#include <map>
 #include <inttypes.h>
 
 /**
@@ -75,14 +75,26 @@ typedef class LE_Allocator
 {
 private:
     Allocation AllocInfo;
-    std::vector<Address_t> Allocs;
+    std::map<Address_t, Bytes_t> Allocs;
 
 public:
     LE_Allocator();
     ~LE_Allocator();
 
+    /** Frees all allocated memory by this Allocator **/
+    void FreeAll(void);
+
+    /** Calls Allocate **/
     Pointer_t Alloc(const Bytes_t& _bSize);
-    void Free(Pointer_t _Pointer);
+
+    /** Calls Reallocate **/
+    Pointer_t Realloc(Pointer_t _pPointer, const Bytes_t& _bSize);
+
+    /** Calls Deallocate **/
+    void Free(Pointer_t _pPointer);
+
+    /** Print out Allocation data **/
+    void PrintInfo(void);
 
 }Allocator;
 
