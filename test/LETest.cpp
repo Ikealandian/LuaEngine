@@ -264,7 +264,7 @@ public:
         // -3 Userdata 1iv
 
         lua_getuservalue(L, 1);
-        L_TablePush(L, 2iv, 3iv, LUA_TOP);
+        L_TablePush(L, 2_iv, 3_iv, LUA_TOP);
 
         return 0;
     }
@@ -289,7 +289,7 @@ public:
         }
 
         lua_getuservalue(L, 1);
-        L_TableGetRaw(L, 2iv, LUA_TOP);
+        L_TableGetRaw(L, 2_iv, LUA_TOP);
 
         if (L_IsNil(L, LUA_TOP))
         {
@@ -326,8 +326,12 @@ public:
 
 int main(int, char**)
 {
+    // Create a new Allocator
+    Allocator Alloc;
+
     // Automatically Creates and Destroys
-    LState L;
+    // Create LState with a custom Allocator
+    LState L(Alloc);
 
     // Register LuaPrint
     L_PushFunc(L, "print", LuaPrint);
@@ -362,6 +366,8 @@ int main(int, char**)
     if (!L_RunScript(L, Script))
         return -1;
 
+    Alloc.PrintInfo();
+
     // Define Lua function
     LFunction AddFunc       = {};
     AddFunc.Name            = "add";
@@ -374,6 +380,10 @@ int main(int, char**)
         double Result = LuaPop<LTypes::Number>(L);
         printf("add(4, 4) = %d\n", (int)Result);
     }
+
+    // Close the state and check Allocation info
+    L.Close();
+    Alloc.PrintInfo();
 
     return 0;
 }
