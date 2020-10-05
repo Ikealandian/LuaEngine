@@ -172,7 +172,7 @@ typedef long long IValue;
 /**
  * IValue literal
  **/
-IValue operator "" iv(unsigned long long _iv);
+IValue operator "" _iv(unsigned long long _iv);
 
 /** Types } **/
 //////////////////

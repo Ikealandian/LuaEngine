@@ -9,7 +9,7 @@
 /**
  * IValue Literal
  **/
-inline IValue operator "" iv(unsigned long long _iv)
+inline IValue operator "" _iv(unsigned long long _iv)
 {
     return (IValue)_iv;
 }
