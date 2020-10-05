@@ -8,6 +8,9 @@
 // Include Lua
 #include <Lua/LLua.hpp>
 
+// Include Lua Alloc
+#include <Lua/LAlloc.hpp>
+
 // Define Raw State
 using LRawState = lua_State*;
 
@@ -20,13 +23,29 @@ typedef struct LE_StateHandler
     // Create the lua_State - lState
     LE_StateHandler()
     {
-        lState = luaL_newstate();
+        lState = lua_newstate(LE_Default_LAlloc, nullptr);
+    }
+
+    // Create the lua_State with a custom Allocator
+    LE_StateHandler(Allocator& _refAllocator)
+    {
+        lState = lua_newstate(LE_Allocator_LAlloc, &_refAllocator);
     }
 
     // Close the lua_State - lState
     ~LE_StateHandler()
     {
-        lua_close(lState);
+        Close();
+    }
+
+    // Close the lua_State
+    void Close()
+    {
+        if (lState)
+        {
+            lua_close(lState);
+            lState = nullptr;
+        }
     }
 
     // Return the raw pointer
