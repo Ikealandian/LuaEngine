@@ -6,6 +6,9 @@
 // Malloc, Realloc, Free
 #include <stdlib.h>
 
+// Printf
+#include <stdio.h>
+
 // Allocation Macros
 #define LARGE_ALLOCATION  2048
 
@@ -20,8 +23,8 @@ Pointer_t Allocate(const Bytes_t& _bSize)
 {
     /** TODO: Use Debugging features    **/
     /** TODO: Warn of large allocation  **/
-    if (_bSize > LARGE_ALLOCATION)
-        return nullptr;
+    // : if (_bSize > LARGE_ALLOCATION)
+    // :     return nullptr;
     
     // Allocate memory
     Pointer_t Ptr = malloc(_bSize);
